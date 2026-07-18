@@ -1,0 +1,6 @@
+node_modules
+dist
+ui
+*.db
+*.log
+package-lock.json
