@@ -1,7 +1,7 @@
 /**
  * 演示：多 LLM provider 混合调度。
  * OpenAI 做规划（强推理），DeepSeek 做执行（高性价比），按进程独立配置。
- * 运行：在 .env 配置 OPENAI_API_KEY 和 DEEPSEEK_API_KEY 后 npx tsx examples/multi-provider.ts
+ * 运行：在 .env 配置 OPENAI_API_KEY 和 OPENAI_BASE_URL 后 npx tsx examples/multi-provider.ts
  */
 import { AgentRuntime, OpenAIProvider, DeepSeekProvider } from '../src/index';
 
@@ -13,8 +13,8 @@ const rt = new AgentRuntime({
       // baseUrl: 'http://localhost:11434/v1',      // 或 Ollama / vLLM 本地
     }),
     new DeepSeekProvider({
-      apiKey: process.env.DEEPSEEK_API_KEY!,
-      baseUrl: process.env.DEEPSEEK_BASE_URL,
+      apiKey: process.env.OPENAI_API_KEY!,
+      baseUrl: process.env.OPENAI_BASE_URL,
     }),
   ],
   defaults: { model: { model: 'gpt-4o', provider: 'openai' } },

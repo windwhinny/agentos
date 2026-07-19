@@ -6,7 +6,7 @@
 
 A multi-agent runtime in Node.js + TypeScript: a unified `Process` abstraction (main agent, sub-agents, and the user are all processes), blocking/async execution, concurrency, fork (COW), semaphore synchronization, signals, pipes, recursive spawn, model-parameterized launch, checkpoints, supervisors, deadlock detection, worker_threads isolation, SQLite session persistence, streaming output, user interrupt (EINTR), multimodal input, multi-provider model management, a REST + SSE live server, and a bilingual React console.
 
-![AgentOS Process Console](docs/images/console.png)
+![AgentOS Process Console](docs/images/console-en.png)
 
 ## Features
 
@@ -22,18 +22,18 @@ A multi-agent runtime in Node.js + TypeScript: a unified `Process` abstraction (
 ```bash
 npm install
 npm test              # all kernel unit + integration tests (MockLLM, no API key needed)
-npm run test:live     # DeepSeek real-API smoke tests (needs DEEPSEEK_API_KEY in .env)
+npm run test:live     # DeepSeek real-API smoke tests (needs OPENAI_API_KEY in .env)
 npm run typecheck
 npm run lint          # ESLint
 npm run format        # Prettier
-npm run server        # live server (REST + SSE, default :8787, needs DEEPSEEK_API_KEY)
+npm run server        # live server (REST + SSE, default :8787, needs OPENAI_API_KEY)
 ```
 
 `.env`:
 
 ```
-DEEPSEEK_API_KEY=sk-...
-DEEPSEEK_BASE_URL=https://api.deepseek.com
+OPENAI_API_KEY=sk-...
+OPENAI_BASE_URL=https://api.deepseek.com
 ```
 
 ## Up and Running in 60 Seconds
@@ -42,7 +42,7 @@ DEEPSEEK_BASE_URL=https://api.deepseek.com
 import { AgentRuntime, DeepSeekProvider } from './src/index';
 
 const rt = new AgentRuntime({
-  providers: [new DeepSeekProvider({ apiKey: process.env.DEEPSEEK_API_KEY! })],
+  providers: [new DeepSeekProvider({ apiKey: process.env.OPENAI_API_KEY! })],
   defaults: { model: { model: 'deepseek-v4-pro', temperature: 0.7 } },
   models: { pro: 'deepseek-v4-pro', flash: 'deepseek-v4-flash' }, // aliases
   budget: { tokens: 500_000 }, // global budget (one of the fork-bomb gates)
@@ -106,7 +106,7 @@ const rt = new AgentRuntime({
   providers: [
     new OpenAIProvider({ apiKey: process.env.OPENAI_API_KEY! }),
     new AnthropicProvider({ apiKey: process.env.ANTHROPIC_API_KEY! }),
-    new DeepSeekProvider({ apiKey: process.env.DEEPSEEK_API_KEY! }),
+    new DeepSeekProvider({ apiKey: process.env.OPENAI_API_KEY! }),
   ],
 });
 
@@ -179,7 +179,7 @@ Schema (WAL mode):
 `server/index.ts` exposes the runtime as REST + SSE for the React console under `ui/`:
 
 ```bash
-DEEPSEEK_API_KEY=sk-... npm run server    # default :8787
+OPENAI_API_KEY=sk-... npm run server    # default :8787
 ```
 
 | Endpoint            | Description                                                                 |
@@ -202,7 +202,7 @@ Model management (registry persisted in `server/models.json`, contains apiKeys â
 | DELETE /api/providers/:name | Remove a provider; if it owned the default model, fall back to the first remaining   |
 | POST /api/default-model     | { model } switch the console default model (affects future spawns, not running ones) |
 
-On startup, if `models.json` is missing, the server seeds a deepseek provider (pro + flash) from `DEEPSEEK_API_KEY` and writes it back.
+On startup, if `models.json` is missing, the server seeds a deepseek provider (pro + flash) from `OPENAI_API_KEY` and writes it back.
 
 ### React Console (`ui/`)
 
@@ -217,7 +217,7 @@ Two modes:
 
 Features: process table tree view (PID/PPID/state/model/tokens), terminal (attach + stdin injection + interrupt), spawn dialog, event stream, pipeline topology, **model switching & management** (top-bar dropdown for the default model; the "âš™ Models" panel registers/removes providers and sets defaults via model chips), **Chinese/English switching** (top-bar toggle, persisted in localStorage).
 
-![English UI](docs/images/console-en.png)
+![Chinese UI](docs/images/console.png)
 
 ### UI e2e (Zero-Dependency CDP Suite)
 

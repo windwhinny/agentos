@@ -120,7 +120,7 @@ CREATED → READY → RUNNING ⇄ BLOCKED(ON_LLM / ON_TOOL / ON_CHILD / ON_SEM /
    - `deepseek-v4-flash`（别名 `flash`）：快速模型，用于执行与子任务类 Process
 3. 推理参数：`temperature`、`maxTokens`、`topP`，进程级覆盖，未设置继承父进程，均未设置取 runtime 默认值
 4. Runtime 默认配置示例：`{ model: 'deepseek-v4-pro', temperature: 0.7 }`
-5. 测试环境通过 `.env` 注入 `DEEPSEEK_API_KEY`、`DEEPSEEK_BASE_URL`
+5. 测试环境通过 `.env` 注入 `OPENAI_API_KEY`、`OPENAI_BASE_URL`
 6. 所有 LLM 调用记录 `model` 与 `usage`（prompt/completion/total tokens），计入预算并体现在 ps() 快照
 
 ## 6. 非功能需求

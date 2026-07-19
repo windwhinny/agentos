@@ -1,7 +1,7 @@
 /**
  * AgentOS live server —— 前端控制台的真实模型后端。
  *
- *   DEEPSEEK_API_KEY=sk-... npm run server        （默认 :8787）
+ *   OPENAI_API_KEY=sk-... npm run server        （默认 :8787）
  *
  * 协议（与 UI 的 RemoteDriver 对齐）：
  *   GET  /api/state   → { ps, pipes, outputs }   全量快照（含各进程 stdout 历史）

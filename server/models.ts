@@ -2,7 +2,7 @@
  * 模型供应商注册表 —— 持久化到 server/models.json（含 apiKey，勿提交 git）。
  *
  * 结构：{ providers: [{ name, type, baseUrl?, apiKey, models[] }], defaultModel }
- * 启动时加载；无文件则用 DEEPSEEK_API_KEY 播种 deepseek 供应商并写回。
+ * 启动时加载；无文件则用 OPENAI_API_KEY 播种 deepseek 供应商并写回。
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -42,9 +42,9 @@ export function loadRegistry(): ModelRegistry {
     return JSON.parse(fs.readFileSync(FILE, 'utf8')) as ModelRegistry;
   }
   // 播种：保持原行为（deepseek 双模型 + 默认 pro）
-  const apiKey = process.env.DEEPSEEK_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
-    console.error('[agentos-server] 缺少 DEEPSEEK_API_KEY 且没有 models.json，无法启动');
+    console.error('[agentos-server] 缺少 OPENAI_API_KEY 且没有 models.json，无法启动');
     process.exit(1);
   }
   const seed: ModelRegistry = {

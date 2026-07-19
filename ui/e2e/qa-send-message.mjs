@@ -12,12 +12,12 @@ const REPO = join(ROOT, '..');
 const OUT = join(ROOT, 'e2e', 'artifacts', 'qa');
 
 const env = readFileSync(join(REPO, '.env'), 'utf8');
-const apiKey = env.match(/DEEPSEEK_API_KEY\s*=\s*(\S+)/)?.[1];
+const apiKey = env.match(/OPENAI_API_KEY\s*=\s*(\S+)/)?.[1];
 if (!apiKey) throw new Error('no key');
 
 const server = spawn('npm', ['run', 'server'], {
   cwd: REPO,
-  env: { ...process.env, DEEPSEEK_API_KEY: apiKey, PORT: '8787' },
+  env: { ...process.env, OPENAI_API_KEY: apiKey, PORT: '8787' },
   stdio: ['ignore', 'pipe', 'pipe'],
 });
 server.stderr.on('data', (d) => process.stderr.write(`[server] ${d}`));

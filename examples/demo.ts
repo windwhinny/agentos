@@ -1,11 +1,11 @@
 /**
  * 演示：pro 父进程 + 两个 flash 子进程并发调研，管道汇总，fork 分支评审。
- * 运行：DEEPSEEK_API_KEY 在 .env 中；npx tsx examples/demo.ts（或编入测试运行）
+ * 运行：OPENAI_API_KEY 在 .env 中；npx tsx examples/demo.ts（或编入测试运行）
  */
 import { AgentRuntime, DeepSeekProvider } from '../src/index';
 
 const rt = new AgentRuntime({
-  providers: [new DeepSeekProvider({ apiKey: process.env.DEEPSEEK_API_KEY! })],
+  providers: [new DeepSeekProvider({ apiKey: process.env.OPENAI_API_KEY! })],
   defaults: { model: { model: 'deepseek-v4-pro' } },
   models: { pro: 'deepseek-v4-pro', flash: 'deepseek-v4-flash' },
   budget: { tokens: 200_000 },

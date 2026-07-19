@@ -18,11 +18,11 @@ const report = { steps: [], pageErrors: {} };
 
 mkdirSync(OUT, { recursive: true });
 
-// —— 从 .env 读 DEEPSEEK_API_KEY(不打印) ——
+// —— 从 .env 读 OPENAI_API_KEY(不打印) ——
 function loadKey() {
   try {
     const env = readFileSync(join(REPO, '.env'), 'utf8');
-    const m = env.match(/DEEPSEEK_API_KEY\s*=\s*(\S+)/);
+    const m = env.match(/OPENAI_API_KEY\s*=\s*(\S+)/);
     return m?.[1] ?? null;
   } catch {
     return null;
@@ -33,7 +33,7 @@ function loadKey() {
 async function startRealServer(apiKey) {
   const proc = spawn('npm', ['run', 'server'], {
     cwd: REPO,
-    env: { ...process.env, DEEPSEEK_API_KEY: apiKey, PORT: '8787' },
+    env: { ...process.env, OPENAI_API_KEY: apiKey, PORT: '8787' },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   proc.stderr.on('data', (d) => process.stderr.write(`[server] ${d}`));
@@ -222,7 +222,7 @@ let serverProc = null;
 try {
   if (LIVE) {
     const key = loadKey();
-    if (!key) throw new Error('.env 中没有 DEEPSEEK_API_KEY,跳过 live 旅程');
+    if (!key) throw new Error('.env 中没有 OPENAI_API_KEY,跳过 live 旅程');
     serverProc = await startRealServer(key);
     await liveJourney(7199);
     serverProc.kill();

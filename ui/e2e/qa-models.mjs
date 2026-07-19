@@ -1,5 +1,5 @@
 // 可视化 QA:模型管理功能(真实后端 + 真实 Chrome headless,逐步截图)
-// 用法: node e2e/qa-models.mjs   (需 repo 根 .env 有 DEEPSEEK_API_KEY;自动起 :8787 真后端)
+// 用法: node e2e/qa-models.mjs   (需 repo 根 .env 有 OPENAI_API_KEY;自动起 :8787 真后端)
 // 产物: e2e/artifacts/qa-models/*.png
 import { spawn } from 'node:child_process';
 import { readFileSync, mkdirSync } from 'node:fs';
@@ -16,13 +16,13 @@ mkdirSync(OUT, { recursive: true });
 
 function loadKey() {
   const env = readFileSync(join(REPO, '.env'), 'utf8');
-  return env.match(/DEEPSEEK_API_KEY\s*=\s*(\S+)/)?.[1] ?? null;
+  return env.match(/OPENAI_API_KEY\s*=\s*(\S+)/)?.[1] ?? null;
 }
 
 async function startRealServer(apiKey) {
   const proc = spawn('npm', ['run', 'server'], {
     cwd: REPO,
-    env: { ...process.env, DEEPSEEK_API_KEY: apiKey, PORT: '8787' },
+    env: { ...process.env, OPENAI_API_KEY: apiKey, PORT: '8787' },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   proc.stderr.on('data', (d) => process.stderr.write(`[server] ${d}`));
@@ -39,7 +39,7 @@ async function startRealServer(apiKey) {
 
 async function main() {
   const apiKey = loadKey();
-  if (!apiKey) throw new Error('.env 缺 DEEPSEEK_API_KEY');
+  if (!apiKey) throw new Error('.env 缺 OPENAI_API_KEY');
   const srv = await startRealServer(apiKey);
   const staticSrv = await serveStatic(join(ROOT, 'dist'), 7200);
   const { proc, client } = await launchChrome();

@@ -3,12 +3,12 @@ import { AgentRuntime } from '../../src/core/runtime';
 import { DeepSeekProvider } from '../../src/llm/deepseek';
 import type { Tool } from '../../src/types';
 
-const RUN = process.env.RUN_LIVE === '1' && !!process.env.DEEPSEEK_API_KEY;
+const RUN = process.env.RUN_LIVE === '1' && !!process.env.OPENAI_API_KEY;
 
 function liveRuntime() {
   const deepseek = new DeepSeekProvider({
-    apiKey: process.env.DEEPSEEK_API_KEY!,
-    baseUrl: process.env.DEEPSEEK_BASE_URL ?? 'https://api.deepseek.com',
+    apiKey: process.env.OPENAI_API_KEY!,
+    baseUrl: process.env.OPENAI_BASE_URL ?? 'https://api.deepseek.com',
     timeoutMs: 55_000,
   });
   return new AgentRuntime({

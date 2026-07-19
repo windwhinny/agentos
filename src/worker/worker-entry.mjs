@@ -41,7 +41,7 @@ if (cfg.worker.provider === 'mock') {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${cfg.worker.apiKey ?? process.env.DEEPSEEK_API_KEY}`,
+          Authorization: `Bearer ${cfg.worker.apiKey ?? process.env.OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
           model: cfg.model.model,

@@ -122,7 +122,7 @@ CREATED → READY → RUNNING ⇄ BLOCKED(ON_LLM / ON_TOOL / ON_CHILD / ON_SEM /
    - `deepseek-v4-flash` (alias `flash`): fast model, for execution and subtask Processes
 3. Inference parameters: `temperature`, `maxTokens`, `topP`; overridable per process, inherited from the parent when unset, and falling back to the runtime default when unset everywhere
 4. Example runtime default configuration: `{ model: 'deepseek-v4-pro', temperature: 0.7 }`
-5. The test environment injects `DEEPSEEK_API_KEY` and `DEEPSEEK_BASE_URL` via `.env`
+5. The test environment injects `OPENAI_API_KEY` and `OPENAI_BASE_URL` via `.env`
 6. Every LLM call records `model` and `usage` (prompt/completion/total tokens), which count toward the budget and appear in ps() snapshots
 
 ## 6. Non-Functional Requirements
